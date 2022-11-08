@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "762835063549",
+    "project_id": "smartview-8acbd",
+    "storage_bucket": "smartview-8acbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762835063549:android:ed30f302f1593e490c2494",
+        "android_client_info": {
+          "package_name": "com.example.smartview_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762835063549-icd5ul0bnm2mkbk4en0ef5v24u68s2fk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCotrbXlqK9yZYfOO-zIDb-qc8m1i4pHyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762835063549-icd5ul0bnm2mkbk4en0ef5v24u68s2fk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "762835063549-0qmmqrc2cjpfbkhgo51m5ihbrn7fhl44.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartviewApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
