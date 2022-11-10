@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class FilterController extends GetxController {
-  RxBool isHigh = RxBool(false);
+  var isHigh = false.obs;
   var isMedium = false.obs;
   var isLow = false.obs;
 
@@ -9,13 +9,37 @@ class FilterController extends GetxController {
   var isIncomplete = false.obs;
   var isComplete = false.obs;
 
-  var isTime = false;
+  var isTime = false.obs;
 
-  void onSelectedHigh(bool? value) {
-    isHigh.value = value!;
+  onHighSelected(value) {
+    isHigh.value = value;
   }
 
-  // onHighSelected(value) {
-  //   isHigh.value = !isHigh.value;
-  // }
+  onMediumSelected(value) {
+    isMedium.value = value;
+  }
+
+  onLowSelected(value) {
+    isLow.value = value;
+  }
+
+  onAllTasksSelected(value) {
+    isAll.value = value;
+  }
+
+  onIncompleteSelected(value) {
+    isIncomplete.value = value;
+  }
+
+  onCompleteSelected(value) {
+    isComplete.value = value;
+  }
+
+  onTimeSelected(value) {
+    isTime.value = value;
+  }
+
+  onPrioritySelected(value) {
+    isTime.value = !value;
+  }
 }

@@ -14,7 +14,7 @@ class FilterWidget extends StatefulWidget {
 }
 
 class _FilterWidgetState extends State<FilterWidget> {
-  // final filterCon = Get.put(FilterController());
+  final filterCon = Get.put(FilterController());
 
   bool isHigh = false;
   bool isMedium = false;
@@ -74,9 +74,11 @@ class _FilterWidgetState extends State<FilterWidget> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 3),
-                  priorityWiseFilter(),
                   const SizedBox(height: 5),
+                  // Priority
+                  priorityWiseFilter(),
+                  const SizedBox(height: 15),
+                  // Status
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: Text(
@@ -88,73 +90,32 @@ class _FilterWidgetState extends State<FilterWidget> {
                       ),
                     ),
                   ),
-                  Chip(
-                    backgroundColor: whitecolor,
-                    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 5),
-                    elevation: 2,
-                    avatar: Transform.scale(
-                      scale: 0.9,
-                      child: Checkbox(
-                        value: true,
-                        onChanged: (value) {},
-                        activeColor: primarycolor,
-                        checkColor: whitecolor,
-                      ),
-                    ),
-                    label: Text(
-                      allT,
-                      style: textstyle.copyWith(
-                        fontWeight: FontWeight.normal,
-                        color: textcolor,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Chip(
-                    backgroundColor: whitecolor,
-                    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 5),
-                    elevation: 2,
-                    avatar: Transform.scale(
-                      scale: 0.9,
-                      child: Checkbox(
-                        value: false,
-                        onChanged: (value) {},
-                        activeColor: primarycolor,
-                        checkColor: whitecolor,
-                      ),
-                    ),
-                    label: Text(
-                      incompleteT,
-                      style: textstyle.copyWith(
-                        fontWeight: FontWeight.normal,
-                        color: textcolor,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Chip(
-                    backgroundColor: whitecolor,
-                    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 5),
-                    elevation: 2,
-                    avatar: Transform.scale(
-                      scale: 0.9,
-                      child: Checkbox(
-                        value: false,
-                        onChanged: (value) {},
-                        activeColor: primarycolor,
-                        checkColor: whitecolor,
-                      ),
-                    ),
-                    label: Text(
-                      completeT,
-                      style: textstyle.copyWith(
-                        fontWeight: FontWeight.normal,
-                        color: textcolor,
-                        fontSize: 14,
-                      ),
+                  const SizedBox(height: 5),
+                  Obx(
+                    () => customChipWidget(
+                      prioValue: filterCon.isAll.value,
+                      onchanged: filterCon.onAllTasksSelected,
+                      lable: allT,
                     ),
                   ),
                   const SizedBox(height: 10),
+                  Obx(
+                    () => customChipWidget(
+                      prioValue: filterCon.isIncomplete.value,
+                      onchanged: filterCon.onIncompleteSelected,
+                      lable: incompleteT,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Obx(
+                    () => customChipWidget(
+                      prioValue: filterCon.isComplete.value,
+                      onchanged: filterCon.onCompleteSelected,
+                      lable: completeT,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  // Sort By
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: Text(
@@ -166,95 +127,43 @@ class _FilterWidgetState extends State<FilterWidget> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 5),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Chip(
-                        backgroundColor: whitecolor,
-                        padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 5),
-                        elevation: 2,
-                        avatar: Transform.scale(
-                          scale: 0.9,
-                          child: Checkbox(
-                            value: false,
-                            onChanged: (value) {},
-                            activeColor: primarycolor,
-                            checkColor: whitecolor,
-                          ),
-                        ),
-                        label: Text(
-                          timeT,
-                          style: textstyle.copyWith(
-                            fontWeight: FontWeight.normal,
-                            color: textcolor,
-                            fontSize: 14,
-                          ),
-                        ),
+                      customChipWidget(
+                        prioValue: isTime,
+                        onchanged: (value) {
+                          setState(() {
+                            isTime = value!;
+                          });
+                        },
+                        lable: timeT,
                       ),
                       const SizedBox(width: 10),
-                      Chip(
-                        backgroundColor: whitecolor,
-                        padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 5),
-                        elevation: 2,
-                        avatar: Transform.scale(
-                          scale: 0.9,
-                          child: Checkbox(
-                            value: false,
-                            onChanged: (value) {},
-                            activeColor: primarycolor,
-                            checkColor: whitecolor,
-                          ),
-                        ),
-                        label: Text(
-                          priorityT,
-                          style: textstyle.copyWith(
-                            fontWeight: FontWeight.normal,
-                            color: textcolor,
-                            fontSize: 14,
-                          ),
-                        ),
+                      customChipWidget(
+                        prioValue: !isTime,
+                        onchanged: (value) {
+                          setState(() {
+                            isTime = !value!;
+                          });
+                        },
+                        lable: priorityT,
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
+                  // Reset & Apply Button
                   SizedBox(
                     width: Get.width,
                     child: Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                              backgroundColor: MaterialStateProperty.all(primarycolor),
-                              fixedSize: MaterialStateProperty.all(const Size.fromHeight(45)),
-                            ),
-                            child: Text(
-                              resetT,
-                              style: textstyle.copyWith(
-                                fontSize: 16,
-                                color: whitecolor,
-                              ),
-                            ),
-                          ),
+                          child: resetButton(),
                         ),
                         const SizedBox(width: 15),
                         Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                              backgroundColor: MaterialStateProperty.all(primarycolor),
-                              fixedSize: MaterialStateProperty.all(const Size.fromHeight(45)),
-                            ),
-                            child: Text(
-                              applyT,
-                              style: textstyle.copyWith(
-                                fontSize: 16,
-                                color: whitecolor,
-                              ),
-                            ),
-                          ),
+                          child: applyButton(),
                         ),
                       ],
                     ),
@@ -268,83 +177,111 @@ class _FilterWidgetState extends State<FilterWidget> {
     );
   }
 
+  Widget applyButton() {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+        backgroundColor: MaterialStateProperty.all(primarycolor),
+        fixedSize: MaterialStateProperty.all(const Size.fromHeight(45)),
+      ),
+      child: Text(
+        applyT,
+        style: textstyle.copyWith(
+          fontSize: 16,
+          color: whitecolor,
+        ),
+      ),
+    );
+  }
+
+  Widget resetButton() {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+        backgroundColor: MaterialStateProperty.all(primarycolor),
+        fixedSize: MaterialStateProperty.all(const Size.fromHeight(45)),
+      ),
+      child: Text(
+        resetT,
+        style: textstyle.copyWith(
+          fontSize: 16,
+          color: whitecolor,
+        ),
+      ),
+    );
+  }
+
   Widget priorityWiseFilter() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Chip(
-          backgroundColor: whitecolor,
-          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 5),
-          elevation: 5,
-          avatar: Transform.scale(
-            scale: 0.9,
-            child: Checkbox(
-              value: isHigh,
-              onChanged: (value) {
-                setState(() {
-                  isHigh = value!;
-                });
-              },
-              activeColor: redcolor,
-              checkColor: textcolor,
+    return Obx(
+      () => Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          customChipWidget(
+            prioValue: filterCon.isHigh.value,
+            onchanged: filterCon.onHighSelected,
+            lable: highT,
+          ),
+          const SizedBox(width: 10),
+          customChipWidget(
+            prioValue: filterCon.isMedium.value,
+            onchanged: filterCon.onMediumSelected,
+            lable: mediumT,
+          ),
+          const SizedBox(width: 10),
+          customChipWidget(
+            prioValue: filterCon.isLow.value,
+            onchanged: filterCon.onLowSelected,
+            lable: lowT,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget customChipWidget({bool? prioValue, Function(bool?)? onchanged, String? lable}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        color: whitecolor,
+        boxShadow: [
+          BoxShadow(
+            offset: const Offset(1, 2),
+            blurRadius: 2,
+            spreadRadius: 1,
+            color: textcolor.withOpacity(.15),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 20,
+            height: 20,
+            child: Transform.scale(
+              scale: 1,
+              child: Checkbox(
+                value: prioValue,
+                onChanged: onchanged,
+                activeColor: primarycolor,
+                checkColor: whitecolor,
+              ),
             ),
           ),
-          label: Text(
-            highT,
+          const SizedBox(width: 5),
+          Text(
+            lable!,
             style: textstyle.copyWith(
               fontWeight: FontWeight.normal,
               color: textcolor,
               fontSize: 14,
             ),
           ),
-        ),
-        const SizedBox(width: 10),
-        Chip(
-          backgroundColor: whitecolor,
-          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 5),
-          elevation: 5,
-          avatar: Transform.scale(
-            scale: 0.9,
-            child: Checkbox(
-              value: true,
-              onChanged: (value) {},
-              activeColor: yellowcolor,
-              checkColor: textcolor,
-            ),
-          ),
-          label: Text(
-            mediumT,
-            style: textstyle.copyWith(
-              fontWeight: FontWeight.normal,
-              color: textcolor,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Chip(
-          backgroundColor: whitecolor,
-          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 5),
-          elevation: 5,
-          avatar: Transform.scale(
-            scale: 0.9,
-            child: Checkbox(
-              value: true,
-              onChanged: (value) {},
-              activeColor: greencolor,
-              checkColor: textcolor,
-            ),
-          ),
-          label: Text(
-            lowT,
-            style: textstyle.copyWith(
-              fontWeight: FontWeight.normal,
-              color: textcolor,
-              fontSize: 14,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
